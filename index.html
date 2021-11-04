@@ -1,8 +1,49 @@
 <div class="tictactoe">
-  <div class="title">
-    <span>Tic Tac Toe</span>
-  </div>
-  <div id="board"></div>
+<div class="title">
+  <span>Tic Tac Toe</span>
+</div>
+<div id="board"></div>
 </div>
 <hr />
 <!-- your code starts here: -->
+<div id="dicegame">
+<h3>DICE GAME</h3>
+<div class="row">
+  <div class="column">
+  <label>P1</label>
+  <select id="dropdown1">
+    <option selected="selected"></option>
+    <option value="0">Blue</option>
+    <option value="1">Orange</option>
+    <option value="2">Purple</option>
+    <option value="3">Green</option>
+    <option value="4">Yellow</option>
+  </select>
+  <br>
+  <label>P1 SCORE: </label><label id="score1">0</label>
+  </div>   
+  <div class="column">
+  <label>P2</label>
+  <select id="dropdown2">
+    <option selected="selected"></option>
+    <option value="0">Blue</option>
+    <option value="1">Orange</option>
+    <option value="2">Purple</option>
+    <option value="3">Green</option>
+    <option value="4">Yellow</option>
+  </select>
+  <br>
+  <label>P2 SCORE: </label><label id="score2">0</label>
+  </div>
+</div>
+<br>
+<div class="center">
+  <label>TURN: </label><label id="turn">P1</label><br>
+  <input type="button" id="roll" value="roll" class="center">
+</div>
+<br>
+<div id="player_roll_div">
+  <label id="player_roll">ROLL</label>
+</div>
+
+</div>

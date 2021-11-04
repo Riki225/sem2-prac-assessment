@@ -20,6 +20,7 @@ let isHumanPlayerTurn: boolean = true;
  */
 function init() {
   createBoard();
+  dicegame();
 }
 
 /**
@@ -165,6 +166,131 @@ function aiMove() {
       alert('The winner is AI');
     }, 1);
   }
+}
+
+enum color {
+  blue = 0,
+  orange,
+  purple,
+  green,
+  yellow
+}
+
+let colors: string[] = ['blue', 'orange', 'purple', 'green', 'yellow'];
+
+class player {
+  color: color = -1;
+  score: number = 0;
+  turn: boolean = false;
+  log = Array().fill(null);
+}
+
+function player_dropdown(player: player, dropdown: HTMLSelectElement) {
+  dropdown.onchange = () => {
+    player.color = +dropdown.options[dropdown.options.selectedIndex].value;
+  };
+}
+
+function dicegame() {
+  let player1 = new player();
+  let dropdown1: HTMLSelectElement = <HTMLSelectElement>(
+    document.getElementById('dropdown1')
+  );
+  player_dropdown(player1, dropdown1);
+  player1.turn = true;
+
+  let player2 = new player();
+  let dropdown2: HTMLSelectElement = <HTMLSelectElement>(
+    document.getElementById('dropdown2')
+  );
+  player_dropdown(player2, dropdown2);
+
+  let turn: HTMLSelectElement = <HTMLSelectElement>(
+    document.getElementById('turn')
+  );
+  let score1: HTMLSelectElement = <HTMLSelectElement>(
+    document.getElementById('score1')
+  );
+  let score2: HTMLSelectElement = <HTMLSelectElement>(
+    document.getElementById('score2')
+  );
+  let roll: HTMLSelectElement = <HTMLSelectElement>(
+    document.getElementById('roll')
+  );
+  let player_roll: HTMLSelectElement = <HTMLSelectElement>(
+    document.getElementById('player_roll')
+  );
+  let player_roll_div: HTMLSelectElement = <HTMLSelectElement>(
+    document.getElementById('player_roll_div')
+  );
+
+  let gameover = false;
+
+  roll.onclick = () => {
+    if (player1.color < 0) {
+      alert('please select a player color!');
+      return;
+    } else if (player1.color < 0) {
+      alert('please select a player color!');
+      return;
+    }
+
+    const rand: number = Math.floor(Math.random() * 6) + 1;
+    player_roll.innerHTML = rand.toString();
+
+    if (player1.turn) {
+      player1.score += rand;
+      player1.log.push(rand);
+      score1.innerHTML = player1.score.toString();
+      turn.innerHTML = 'P2';
+      player_roll_div.style.backgroundColor = colors[player1.color];
+      player2.turn = true;
+      player1.turn = false;
+    } else if (player2.turn) {
+      player2.score += rand;
+      player2.log.push(rand);
+      score2.innerHTML = player2.score.toString();
+      turn.innerHTML = 'P1';
+      player_roll_div.style.backgroundColor = colors[player2.color];
+      player1.turn = true;
+      player2.turn = false;
+    }
+
+    if (player1.score >= 20) {
+      alert('P1 won!');
+      gameover = true;
+    } else if (player2.score >= 20) {
+      alert('P2 won!');
+      gameover = true;
+    }
+
+    if (gameover) {
+      let output1: string = '';
+      for (let i: number = 0; i < player1.log.length; i++) {
+        output1 += player1.log[i].toString() + ', ';
+      }
+      alert( 
+        '\ncurrent player: P1\n' +
+        'roll log: ' +
+          output1.slice(0, -2) +
+          '\ntotal score: ' +
+          player1.score.toString()
+      );
+  
+      let output2: string = '';
+      for (let i: number = 0; i < player2.log.length; i++) {
+        output2 += player2.log[i].toString() + ', ';
+      }
+      alert( '\ncurrent player: P2\n' +
+        'roll log: ' +
+          output2.slice(0, -2) +
+          '\ntotal score: ' +
+          player2.score.toString()
+      );
+    }
+  };
+
+    
 }
 
 init();
